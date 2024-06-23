@@ -49,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     "${userProvider.userData?.image}",
                                     fit: BoxFit.cover,
                                   )
-                                : Icon(Icons.person)),
+                                : const Icon(Icons.person)),
                       ),
                       const SizedBox(
                         height: 20,

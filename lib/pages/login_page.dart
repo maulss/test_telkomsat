@@ -115,7 +115,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: validasiForm,
-                child: const Text("Login"),
+                child: loginProvider.isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text("Login"),
               )
             ],
           ),
