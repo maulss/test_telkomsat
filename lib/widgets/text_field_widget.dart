@@ -9,8 +9,10 @@ class TextFieldWidget extends StatelessWidget {
       this.obscureText = false,
       this.errorText,
       this.onChanged,
-      this.maxLines = 1});
+      this.maxLines = 1,
+      this.keyboardType = TextInputType.text});
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   final String? labelText;
   final Widget? suffixIcon;
   final bool obscureText;
@@ -21,6 +23,7 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: keyboardType,
       maxLines: maxLines,
       onChanged: onChanged,
       obscureText: obscureText,

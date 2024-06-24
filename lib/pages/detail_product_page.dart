@@ -56,12 +56,15 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                   child: Stack(
                                     children: [
                                       Center(
-                                        child: Image.network(
-                                          detailProductProvider.images[index],
-                                          fit: BoxFit.contain,
-                                          width: double.infinity,
-                                        ),
-                                      ),
+                                          child:
+                                              detailProductData?.images != null
+                                                  ? Image.network(
+                                                      detailProductProvider
+                                                          .images[index],
+                                                      fit: BoxFit.contain,
+                                                      width: double.infinity,
+                                                    )
+                                                  : const Icon(Icons.add_box)),
                                       Positioned(
                                         top: 16,
                                         left: 16,
@@ -206,7 +209,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                     ],
                                   ),
                                   Text(
-                                      "${detailProductData!.reviews?.length} Riviews")
+                                      "${detailProductData?.reviews?.length ?? 0} Riviews")
                                 ],
                               ),
                               SizedBox(
@@ -214,11 +217,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                 width: double.infinity,
                                 child: ListView.builder(
                                   itemCount:
-                                      detailProductData.reviews?.length ?? 0,
+                                      detailProductData?.reviews?.length ?? 0,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     var dataComments =
-                                        detailProductData.reviews?[index];
+                                        detailProductData?.reviews?[index];
                                     return Container(
                                       margin: const EdgeInsets.only(
                                           right: 10, bottom: 10, top: 10),

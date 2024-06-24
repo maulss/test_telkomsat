@@ -5,11 +5,11 @@ import 'package:test_telkomsat2/models/response_add_product_model.dart';
 class AddProductService {
   final Dio _dio = Dio();
 
-  Future<ResponseAddproductModel?> addproduct(String title, String category,
+  Future<ResponseAddproductModel?> addproduct(int id ,String title, String category,
       double price, int stock, String description) async {
     try {
-      final response = await _dio.post(
-        "${ApiConstant.baseUrl}/products/add",
+      final response = await _dio.put(
+        "${ApiConstant.baseUrl}/products/$id",
         data: {
           "title": title,
           "category": category,
