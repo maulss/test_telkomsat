@@ -8,17 +8,20 @@ class TextFieldWidget extends StatelessWidget {
       this.suffixIcon,
       this.obscureText = false,
       this.errorText,
-      this.onChanged});
+      this.onChanged,
+      this.maxLines = 1});
   final TextEditingController? controller;
   final String? labelText;
   final Widget? suffixIcon;
   final bool obscureText;
   final String? errorText;
+  final int? maxLines;
   final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLines: maxLines,
       onChanged: onChanged,
       obscureText: obscureText,
       controller: controller,

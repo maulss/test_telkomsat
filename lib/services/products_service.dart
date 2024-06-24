@@ -10,7 +10,7 @@ class ProductsService {
       if (response.statusCode == 200) {
         return ResponseProductsModel.fromJson(response.data);
       } else {
-        print("Failed get data: ${response.statusMessage}");
+        print("Failed get products: ${response.statusMessage}");
         return null;
       }
     } on DioException catch (e) {

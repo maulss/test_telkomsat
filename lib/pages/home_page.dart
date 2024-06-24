@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_telkomsat2/pages/add_product_page.dart';
+import 'package:test_telkomsat2/pages/detail_product_page.dart';
 import 'package:test_telkomsat2/pages/profile_page.dart';
 import 'package:test_telkomsat2/providers/products_provider.dart';
+import 'package:test_telkomsat2/widgets/price_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,11 +61,18 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     var dataProduct =
                         productsProvider.productsData?.products?[index];
-                    double priceDiscount = (dataProduct?.price ?? 0) *
-                        (dataProduct?.discountPercentage ?? 0) /
-                        100;
+
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailProductPage(
+                              id: index,
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -81,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                                 child: dataProduct?.thumbnail != null
                                     ? Image.network(
                                         "${dataProduct?.thumbnail}",
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.contain,
                                       )
                                     : const Icon(Icons.add_box),
                               ),
@@ -101,37 +111,10 @@ class _HomePageState extends State<HomePage> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "\$ ${((dataProduct?.price ?? 0) - priceDiscount).toStringAsFixed(2)}",
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          " ${dataProduct?.price}",
-                                          style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          " -${dataProduct?.discountPercentage}%",
-                                          style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
+                                    PriceWidget(
+                                      index: index,
+                                      fontSizeDiscount: 12,
+                                      fontSizePrice: 14,
                                     ),
                                     const SizedBox(
                                       height: 5,
@@ -193,6 +176,16 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddProductPage(),
+              ));
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
