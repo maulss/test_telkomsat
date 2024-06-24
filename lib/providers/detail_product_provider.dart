@@ -23,6 +23,7 @@ class DetailProductProvider extends ChangeNotifier {
       if (response != null) {
         _detailProductData = response;
         _images = (response.images as List);
+        print(_detailProductData);
       } else {
         _error = "Data Kosong";
       }

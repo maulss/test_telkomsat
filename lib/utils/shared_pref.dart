@@ -13,4 +13,9 @@ class SharedPref {
     String? token = prefs.getString(_token);
     return token;
   }
+
+  static void removeToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_token);
+  }
 }

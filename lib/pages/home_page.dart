@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:test_telkomsat2/pages/add_product_page.dart';
 import 'package:test_telkomsat2/pages/detail_product_page.dart';
 import 'package:test_telkomsat2/pages/profile_page.dart';
+import 'package:test_telkomsat2/pages/update_product_page.dart';
+import 'package:test_telkomsat2/providers/delete_product_provider.dart';
 import 'package:test_telkomsat2/providers/products_provider.dart';
 import 'package:test_telkomsat2/widgets/price_widget.dart';
 
@@ -25,10 +27,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
+    final deleteProductProvider = Provider.of<DeleteProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Home Page"),
+        title: const Text("Products Page"),
         actions: [
           IconButton(
             onPressed: () async {
@@ -161,7 +164,84 @@ class _HomePageState extends State<HomePage> {
                                               const TextStyle(fontSize: 13.5),
                                         ),
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                UpdateProductPage(
+                                                                    id: dataProduct!
+                                                                        .id!),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: const Text(
+                                                          "Update Data"),
+                                                    ),
+                                                    ElevatedButton(
+                                                      onPressed: () async {
+                                                        await deleteProductProvider
+                                                            .deleteProduct(
+                                                                dataProduct!
+                                                                    .id!);
+                                                        if (deleteProductProvider
+                                                                .deleteProductData !=
+                                                            null) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                              duration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          2),
+                                                              content: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                      "Product ${deleteProductProvider.deleteProductData?.title} berhasil dihapus"),
+                                                                  Text(
+                                                                      "Status dihapus : ${deleteProductProvider.deleteProductData?.isDeleted}"),
+                                                                  Text(
+                                                                      "Tanggal : ${deleteProductProvider.deleteProductData?.deletedOn}"),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        } else if (deleteProductProvider
+                                                                .error !=
+                                                            null) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                  "Error: ${deleteProductProvider.error}"),
+                                                            ),
+                                                          );
+                                                        }
+
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                          "Delete Data"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
                                           child: const Icon(Icons.more_vert),
                                         )
                                       ],

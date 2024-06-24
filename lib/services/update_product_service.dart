@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:test_telkomsat2/constants/api_constant.dart';
-import 'package:test_telkomsat2/models/response_add_product_model.dart';
+import 'package:test_telkomsat2/models/response_update_product_model.dart';
 
-class AddProductService {
+class UpdateProductService {
   final Dio _dio = Dio();
 
-  Future<ResponseAddproductModel?> addproduct(int id ,String title, String category,
-      double price, int stock, String description) async {
+  Future<ResponseUpdateproductModel?> updateproduct(int id, String title,
+      String category, double price, int stock, String description) async {
     try {
       final response = await _dio.put(
         "${ApiConstant.baseUrl}/products/$id",
@@ -23,10 +23,10 @@ class AddProductService {
           },
         ),
       );
-      if (response.statusCode == 201) {
-        return ResponseAddproductModel.fromJson(response.data);
+      if (response.statusCode == 200) {
+        return ResponseUpdateproductModel.fromJson(response.data);
       } else {
-        print("Failed add product: ${response.statusMessage}");
+        print("Failed update product: ${response.statusMessage}");
         return null;
       }
     } on DioException catch (e) {

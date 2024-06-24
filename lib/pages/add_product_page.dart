@@ -3,13 +3,33 @@ import 'package:provider/provider.dart';
 import 'package:test_telkomsat2/providers/add_product_provider.dart';
 import 'package:test_telkomsat2/widgets/text_field_widget.dart';
 
-class AddProductPage extends StatelessWidget {
+class AddProductPage extends StatefulWidget {
   AddProductPage({super.key});
+
+  @override
+  State<AddProductPage> createState() => _AddProductPageState();
+}
+
+class _AddProductPageState extends State<AddProductPage> {
   TextEditingController titleControl = TextEditingController();
+
   TextEditingController categoryControl = TextEditingController();
+
   TextEditingController priceControl = TextEditingController();
+
   TextEditingController stockControl = TextEditingController();
+
   TextEditingController descriptionControl = TextEditingController();
+
+  @override
+  void dispose() {
+    titleControl.dispose();
+    categoryControl.dispose();
+    priceControl.dispose();
+    stockControl.dispose();
+    descriptionControl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +98,11 @@ class AddProductPage extends StatelessWidget {
                         int.parse(stockControl.text),
                         descriptionControl.text,
                       );
+                      titleControl.clear();
+                      categoryControl.clear();
+                      priceControl.clear();
+                      stockControl.clear();
+                      descriptionControl.clear();
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

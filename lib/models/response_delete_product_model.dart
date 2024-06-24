@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final responseDetailProductModel = responseDetailProductModelFromJson(jsonString);
+//     final responseDeteleproductModel = responseDeteleproductModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ResponseDetailProductModel responseDetailProductModelFromJson(String str) => ResponseDetailProductModel.fromJson(json.decode(str));
+ResponseDeteleproductModel responseDeteleproductModelFromJson(String str) => ResponseDeteleproductModel.fromJson(json.decode(str));
 
-String responseDetailProductModelToJson(ResponseDetailProductModel data) => json.encode(data.toJson());
+String responseDeteleproductModelToJson(ResponseDeteleproductModel data) => json.encode(data.toJson());
 
-class ResponseDetailProductModel {
+class ResponseDeteleproductModel {
     int? id;
     String? title;
     String? description;
@@ -31,8 +31,10 @@ class ResponseDetailProductModel {
     Meta? meta;
     List<String>? images;
     String? thumbnail;
+    bool? isDeleted;
+    DateTime? deletedOn;
 
-    ResponseDetailProductModel({
+    ResponseDeteleproductModel({
         this.id,
         this.title,
         this.description,
@@ -55,9 +57,11 @@ class ResponseDetailProductModel {
         this.meta,
         this.images,
         this.thumbnail,
+        this.isDeleted,
+        this.deletedOn,
     });
 
-    factory ResponseDetailProductModel.fromJson(Map<String, dynamic> json) => ResponseDetailProductModel(
+    factory ResponseDeteleproductModel.fromJson(Map<String, dynamic> json) => ResponseDeteleproductModel(
         id: json["id"],
         title: json["title"],
         description: json["description"],
@@ -80,9 +84,9 @@ class ResponseDetailProductModel {
         meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
         images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
         thumbnail: json["thumbnail"],
+        isDeleted: json["isDeleted"],
+        deletedOn: json["deletedOn"] == null ? null : DateTime.parse(json["deletedOn"]),
     );
-
-  get detailProductData => null;
 
     Map<String, dynamic> toJson() => {
         "id": id,
@@ -107,6 +111,8 @@ class ResponseDetailProductModel {
         "meta": meta?.toJson(),
         "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
         "thumbnail": thumbnail,
+        "isDeleted": isDeleted,
+        "deletedOn": deletedOn?.toIso8601String(),
     };
 }
 

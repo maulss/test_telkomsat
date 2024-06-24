@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_telkomsat2/pages/login_page.dart';
 import 'package:test_telkomsat2/providers/user_provider.dart';
+import 'package:test_telkomsat2/utils/shared_pref.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -73,6 +75,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       TextWidget(
                         text:
                             "Birth Date : ${userProvider.userData?.birthDate}",
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            SharedPref.removeToken();
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ));
+                          },
+                          child: const Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
                       )
                     ],
                   ),
